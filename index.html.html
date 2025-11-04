@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BISAYA SI IAN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #000;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+        .photo {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
+            animation: fall linear infinite;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .photo:hover {
+            transform: scale(1.3) !important;
+            z-index: 1000;
+            border: 3px solid #fff;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-150px) rotate(-30deg);
+                opacity: 0;
+            }
+            8% {
+                opacity: 1;
+            }
+            92% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 150px)) rotate(30deg);
+                opacity: 0;
+            }
+        }
+        .title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 36px;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            z-index: 10;
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+        .glow {
+            text-shadow: 0 0 20px #00f7ff, 0 0 40px #00f7ff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title glow">BISAYA TO</div>
+
+    <script>
+        // ADD YOUR FAMILY PHOTOS HERE (as many as you want!)
+        const photos = [
+            "IMG_20250926_192832_013.webp",
+        ];
+
+        let activePhotos = 0;
+        const MAX_PHOTOS = 80; // Maximum photos on screen at once
+
+        function createFallingPhoto() {
+            if (activePhotos >= MAX_PHOTOS) return;
+
+            const img = document.createElement('img');
+            img.classList.add('photo');
+            img.src = photos[Math.floor(Math.random() * photos.length)];
+
+            // Random position
+            img.style.left = Math.random() * (window.innerWidth - 110) + 'px';
+
+            // Faster fall: 3 to 8 seconds
+            const duration = 3 + Math.random() * 5;
+            img.style.animationDuration = duration + 's';
+
+            // Random size variation
+            const size = 80 + Math.random() * 50;
+            img.style.width = size + 'px';
+            img.style.height = size + 'px';
+
+            // Random rotation start
+            const rot = -40 + Math.random() * 80;
+            img.style.transform = `rotate(${rot}deg)`;
+
+            document.body.appendChild(img);
+            activePhotos++;
+
+            // Remove after animation
+            setTimeout(() => {
+                if (img.parentNode) {
+                    img.parentNode.removeChild(img);
+                    activePhotos--;
+                }
+            }, duration * 1000 + 1000);
+        }
+
+        // FLOOD MODE: Create photos every 50-300ms
+        setInterval(() => {
+            for (let i = 0; i < 3; i++) { // 3 photos per burst
+                setTimeout(createFallingPhoto, i * 50);
+            }
+        }, 400); // Every 0.4 seconds
+
+        // Initial burst
+        for (let i = 0; i < 30; i++) {
+            setTimeout(createFallingPhoto, i * 100);
+        }
+    </script>
+
+</body>
+</html>
