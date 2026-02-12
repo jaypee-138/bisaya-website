@@ -63,9 +63,8 @@
             const picture = document.createElement('div');
             picture.classList.add('falling-picture');
             
-            // Set the background image
-            // Add a random seed to get different images from Lorem Picsum
-            picture.style.backgroundImage = `url('${imageUrl}?random=${Math.random()}')`;
+            // Set the background image (REMOVED the ?random part for local files)
+            picture.style.backgroundImage = `url('${imageUrl}')`;
             
             // Random horizontal position
             const randomX = Math.random() * (window.innerWidth - 100);
@@ -95,5 +94,3 @@
     </script>
 </body>
 </html>
-
-
